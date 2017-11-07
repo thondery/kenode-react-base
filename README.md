@@ -1,4 +1,4 @@
-# kenode-react-base
+# kenote-react-base
 
 React Base for kenote
 
