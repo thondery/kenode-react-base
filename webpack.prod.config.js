@@ -5,6 +5,7 @@ const webpackConfig = require('./webpack.config')
 webpackConfig.plugins.push(
   new webpack.optimize.UglifyJsPlugin({
     sourceMap: !!webpackConfig.devtool,
+    beautify: false,
     comments: false,
     compress: {
       warnings: false,
@@ -17,6 +18,9 @@ webpackConfig.plugins.push(
       evaluate: true,
       if_return: true,
       join_vars: true,
+      drop_console: true,
+      collapse_vars: true,
+      reduce_vars: true,
     },
   }),
   new webpack.optimize.AggressiveMergingPlugin(),

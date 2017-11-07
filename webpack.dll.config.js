@@ -20,12 +20,23 @@ const config = {
       context: __dirname,
     }),
     new webpack.optimize.UglifyJsPlugin({
+      beautify: false,
+      comments: false,
       compress: {
-        warnings: false
+        warnings: false,
+        screw_ie8: true,
+        conditionals: true,
+        unused: true,
+        comparisons: true,
+        sequences: true,
+        dead_code: true,
+        evaluate: true,
+        if_return: true,
+        join_vars: true,
+        drop_console: true,
+        collapse_vars: true,
+        reduce_vars: true,
       },
-      mangle: {
-        except: ['exports', 'require']
-      }
     }),
     new webpack.optimize.ModuleConcatenationPlugin()
   ],
