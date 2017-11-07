@@ -9,5 +9,6 @@ test('test => Root', () => {
   )
   expect(component).toMatchSnapshot()
   expect(component.toJSON().type).toEqual('div')
+  expect(component.toJSON().props.className).toEqual('rootWrapper')
   expect(component.toJSON().children).toEqual(['test'])
 })

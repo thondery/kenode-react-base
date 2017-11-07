@@ -1,6 +1,7 @@
 
 const path = require('path')
 const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin')
 const fs = require('fs-extra')
@@ -17,6 +18,7 @@ if (isManifest) {
   }
 }
 assets.push(`${contextPath}index.bundle.js`)
+assets.push(`${contextPath}index.bundle.css`)
 
 const config = {
   context: path.resolve(__dirname, project.srcDir),
@@ -50,6 +52,10 @@ const config = {
       __DEV__,
       __PROD__
     }, project.globals)),
+    new ExtractTextPlugin({
+      filename: '[name].css',
+      allChunks: true
+    }),
     new HtmlWebpackPlugin({
       template : path.resolve(__dirname, project.srcDir, 'index.html'),
       filename : 'index.html',
@@ -72,6 +78,19 @@ const config = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: 'babel-loader?cacheDirectory=true'
+      },
+      {
+        test : /\.json$/,
+        use : [
+          'json-loader'
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader?sourceMap&-minimize'
+        })
       },
     ],
   }
