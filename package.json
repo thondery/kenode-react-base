@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "description": "react base",
   "main": "index.js",
-  "repository": "https://github.com/thondery/kenode-react-base.git",
+  "repository": "https://github.com/thondery/kenote-react-base.git",
   "author": "thondery <thondery@163.com>",
   "license": "MIT",
   "dependencies": {
