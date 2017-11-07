@@ -2,6 +2,14 @@
 
 React Base for kenote
 
+[![Build Status][travis-image]][travis-url]
+[![Codecov Status][codecov-image]][codecov-url]
+
+[travis-image]: https://travis-ci.org/thondery/kenote-react-base.svg?branch=master
+[travis-url]: https://travis-ci.org/thondery/kenote-react-base
+[codecov-image]: https://img.shields.io/codecov/c/github/thondery/kenote-react-base/master.svg
+[codecov-url]:   https://codecov.io/github/thondery/kenote-react-base?branch=master
+
 ## Requirements
 
 - node ^6.0.0
