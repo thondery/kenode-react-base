@@ -49,7 +49,7 @@
     "build:dll": "webpack --config webpack.dll.config.js --progress",
     "clean": "rimraf ./dist",
     "test": "jest --u --colors",
-    "codecov": "jest --u --colors --coverage"
+    "codecov": "jest --u --colors --coverage && codecov"
   },
   "jest": {
     "moduleFileExtensions": [
