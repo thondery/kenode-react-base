@@ -1,6 +1,6 @@
 
 import React, { PureComponent } from 'react'
-import '../styles/root.css'
+import '../styles/root.scss'
 
 export default class Root extends PureComponent {
 

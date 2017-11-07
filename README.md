@@ -1,6 +1,6 @@
 # kenode-react-base
 
-react base
+React Base for kenote
 
 ## Requirements
 

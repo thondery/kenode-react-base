@@ -53,7 +53,7 @@ const config = {
       __PROD__
     }, project.globals)),
     new ExtractTextPlugin({
-      filename: '[name].css',
+      filename: '[name].bundle.css',
       allChunks: true
     }),
     new HtmlWebpackPlugin({

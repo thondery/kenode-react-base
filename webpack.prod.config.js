@@ -1,6 +1,25 @@
 
 const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const webpackConfig = require('./webpack.config')
+
+const scssLoader = [
+  {
+    loader: 'css-loader?minimize',
+    options: {
+      sourcemap: true
+    }
+  },
+  {
+    loader: 'postcss-loader'
+  },
+  {
+    loader: 'sass-loader',
+    options: {
+      sourcemap: true
+    }
+  }
+]
 
 webpackConfig.plugins.push(
   new webpack.optimize.UglifyJsPlugin({
@@ -25,6 +44,16 @@ webpackConfig.plugins.push(
   }),
   new webpack.optimize.AggressiveMergingPlugin(),
   new webpack.optimize.ModuleConcatenationPlugin()
+)
+
+webpackConfig.module.rules.push(
+  {
+    test: /\.scss$/,
+    use: ExtractTextPlugin.extract({
+      fallback: 'style-loader',
+      use: scssLoader,
+    })
+  }
 )
 
 module.exports = webpackConfig
