@@ -48,8 +48,8 @@
     "compile": "cross-env NODE_ENV=production webpack --config webpack.prod.config.js --progress",
     "build:dll": "webpack --config webpack.dll.config.js --progress",
     "clean": "rimraf ./dist",
-    "test": "jest --colors",
-    "codecov": "jest --colors --coverage"
+    "test": "jest --u --colors",
+    "codecov": "jest --u --colors --coverage"
   },
   "jest": {
     "moduleFileExtensions": [
