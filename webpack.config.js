@@ -5,27 +5,52 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin')
 const fs = require('fs-extra')
+const _ = require('lodash')
 const project = require('./project.config')
 
 const { __DEV__, __PROD__, globals } = project
 const contextPath = globals.__DESKTOP__ ? '' : '/'
-const assets = []
-const isManifest = fs.existsSync(`./${project.manifest}`)
-if (isManifest) {
-  const manifest = require(`./${project.manifest}`)
-  for (let ext of ['js', 'css']) {
-    fs.existsSync(`./${project.outDir}/${manifest.name}.${ext}`) && assets.push(`${contextPath}${manifest.name}.${ext}`)
+
+const getDllReferencePlugin = (items = null) => {
+  let plugins = []
+  for (let e of _.keys(project.vendors)) {
+    plugins.push(
+      new webpack.DllReferencePlugin({
+        context: __dirname,
+        manifest: require(`./${project.manifest.replace(/\[name\]/, e)}`)
+      })
+    )
   }
+  return _.concat(plugins, items)
 }
-assets.push(`${contextPath}index.bundle.js`)
-assets.push(`${contextPath}index.bundle.css`)
+
+const getAssets = (opts = null) => {
+  opts = Object.assign({
+    name: '[name].bundle', 
+    css: true
+  }, opts)
+  let assets = []
+  for (let e of _.keys(project.vendors)) {
+    let isManifest = fs.existsSync(`./${project.manifest.replace(/\[name\]/, e)}`)
+    if (isManifest) {
+      let manifest = require(`./${project.manifest.replace(/\[name\]/, e)}`)
+      for (let ext of ['js', 'css']) {
+        fs.existsSync(`./${project.outDir}/${manifest.name}.${ext}`) && assets.push(`${contextPath+manifest.name}.${ext}`)
+      }
+    }
+  }
+  for (let e of _.keys(project.entry)) {
+    let filename = opts.name.replace(/\[name\]/, e)
+    assets.push(`${contextPath+filename}.js`)
+    opts.css && assets.push(`${contextPath+filename}.css`)
+  }
+  return assets
+}
 
 const config = {
   context: path.resolve(__dirname, project.srcDir),
   cache: true,
-  entry: {
-    index: './index.js',
-  },
+  entry: project.entry,
   devtool: project.sourcemaps ? 'source-map' : false,
   output: {
     path: path.resolve(__dirname, project.outDir),
@@ -40,11 +65,7 @@ const config = {
     extensions: ['*', '.js', '.jsx', '.json'],
     alias: project.alias
   },
-  plugins: [
-    new webpack.DllReferencePlugin({
-      context: __dirname,
-			manifest: require('./dll/manifest.json')
-    }),
+  plugins: getDllReferencePlugin([
     new webpack.DefinePlugin(Object.assign({
       'process.env': {
         'NODE_ENV': JSON.stringify(project.env)
@@ -67,11 +88,11 @@ const config = {
       }
     }),
     new HtmlWebpackIncludeAssetsPlugin({
-      assets: assets,
+      assets: getAssets(),
       append: false,
       hash: true
     })
-  ],
+  ]),
   module: {
     rules: [
       {
@@ -92,6 +113,22 @@ const config = {
           use: 'css-loader?sourceMap&-minimize'
         })
       },
+      {
+        test: /\.(png|jpe?g|gif)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 8192,
+          name: '[path][name].[ext]?[hash]'
+        }
+      },
+      {
+        test: /\.(ttf|eot|svg|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'file-loader',
+        options: {
+          limit: 8192,
+          name: '[path][name].[ext]'
+        }
+      }
     ],
   }
 }

@@ -1,13 +1,12 @@
 
 const path = require('path')
 const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const project = require('./project.config')
 
 
 const config = {
-  entry: {
-    vendor: project.vendors,
-  },
+  entry: project.vendors,
   output: {
     path: path.join(__dirname, project.outDir),
     filename: '[name]_bundle.js',
@@ -18,6 +17,10 @@ const config = {
       path: path.join(__dirname, project.manifest),
       name: '[name]_bundle',
       context: __dirname,
+    }),
+    new ExtractTextPlugin({
+      filename: '[name]_bundle.css',
+      allChunks: true
     }),
     new webpack.optimize.UglifyJsPlugin({
       beautify: false,
@@ -47,6 +50,45 @@ const config = {
         exclude: /node_modules/,
         loader: 'babel-loader?cacheDirectory=true'
       },
+      {
+        test : /\.json$/,
+        use : [
+          'json-loader'
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader?minimize',
+              options: {
+                sourcemap: true
+              }
+            },
+            {
+              loader: 'postcss-loader'
+            },
+          ]
+        })
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 8192,
+          name: '[path][name].[ext]?[hash]'
+        }
+      },
+      {
+        test: /\.(ttf|eot|svg|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'file-loader',
+        options: {
+          limit: 8192,
+          name: '[path][name].[ext]'
+        }
+      }
     ]
   }
 }

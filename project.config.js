@@ -14,13 +14,20 @@ module.exports = {
   outDir       : 'dist',
   publicPath   : '',
   sourcemaps   : true,
-  manifest     : 'dll/manifest.json',
-  vendors      : [
-    'babel-polyfill',
-    'react',
-    'react-dom',
-    'react-hot-loader'
-  ],
+  manifest     : 'dll/[name]-manifest.json',
+  vendors      : {
+    'vendor_0': [
+      'babel-polyfill',
+      'react-hot-loader'
+    ],
+    'vendor_1': [
+      'react',
+      'react-dom'
+    ]
+  },
+  entry        : {
+    index: './index.js'
+  },
   alias        : {
     containers : path.resolve(__dirname, 'src/containers')
   }
