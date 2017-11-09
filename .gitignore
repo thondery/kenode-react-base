@@ -37,7 +37,7 @@ node_modules/
 jspm_packages/
 dist/
 dll/
-__tests__/__snapshots__/
+**/__snapshots__/
 
 # Typescript v1 declaration files
 typings/

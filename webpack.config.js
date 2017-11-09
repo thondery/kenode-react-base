@@ -4,6 +4,7 @@ const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin')
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const fs = require('fs-extra')
 const _ = require('lodash')
 const project = require('./project.config')
@@ -91,7 +92,8 @@ const config = {
       assets: getAssets(),
       append: false,
       hash: true
-    })
+    }),
+    new LodashModuleReplacementPlugin
   ]),
   module: {
     rules: [

@@ -2,10 +2,13 @@
 
 React Base for kenote
 
+[![Version Code][version-image]][version-url]
 [![Build Status][travis-image]][travis-url]
 [![Codecov Status][codecov-image]][codecov-url]
 [![Gratipay][licensed-image]][licensed-url]
 
+[version-image]: https://img.shields.io/badge/version-v1.1.0-orange.svg
+[version-url]: https://github.com/thondery/kenode-react-base
 [travis-image]: https://travis-ci.org/thondery/kenote-react-base.svg?branch=master
 [travis-url]: https://travis-ci.org/thondery/kenote-react-base
 [codecov-image]: https://img.shields.io/codecov/c/github/thondery/kenote-react-base/master.svg
@@ -38,6 +41,7 @@ $ yarn start  # Start the development server (or `npm start`)
 | start | Serves your app at localhost:3000 |
 | build | Builds the application to ./dist |
 | test | Runs unit tests with Jest. |
+| codecov | Runs unit tests & codecov with Jest. |
 
 ## Project Structure
 
