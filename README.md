@@ -8,7 +8,7 @@ React Base for kenote
 [![Gratipay][licensed-image]][licensed-url]
 
 [version-image]: https://img.shields.io/badge/version-v1.1.0-orange.svg
-[version-url]: https://github.com/thondery/kenode-react-base
+[version-url]: https://github.com/thondery/kenote-react-base
 [travis-image]: https://travis-ci.org/thondery/kenote-react-base.svg?branch=master
 [travis-url]: https://travis-ci.org/thondery/kenote-react-base
 [codecov-image]: https://img.shields.io/codecov/c/github/thondery/kenote-react-base/master.svg
